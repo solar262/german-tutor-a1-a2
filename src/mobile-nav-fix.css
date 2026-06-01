@@ -1,0 +1,29 @@
+/* Mobile navigation clarity fix: keep section labels visible and avoid relying on browser back */
+@media (max-width: 520px){
+  .phone{padding-bottom:245px!important;}
+  nav{
+    width:min(540px,calc(100% - 12px))!important;
+    padding:8px!important;
+    gap:6px!important;
+    border-radius:24px!important;
+  }
+  nav button{
+    min-height:62px!important;
+    padding:8px 2px!important;
+    gap:4px!important;
+    font-size:11px!important;
+  }
+  nav small{
+    display:block!important;
+    font-size:10px!important;
+    line-height:1.05!important;
+    font-weight:1000!important;
+    max-width:100%!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+  }
+  nav button.active small,
+  nav button.active svg{color:#07111f!important;}
+  .roleplayWrap{padding-bottom:70px!important;}
+  .coachBox{margin-bottom:6px!important;}
+}
