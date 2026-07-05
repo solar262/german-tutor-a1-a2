@@ -46,17 +46,22 @@
   }
   function floatingPanel(title,phrases){
     let old=document.getElementById('memoryPanel');if(old)old.remove();
-    let p=document.createElement('div');p.id='memoryPanel';p.style.cssText='position:fixed;left:10px;right:10px;bottom:92px;z-index:999;background:#0b1424;border:1px solid #355174;border-radius:20px;padding:14px;box-shadow:0 18px 60px #000b;max-width:560px;margin:auto;color:white;display:grid;gap:8px';
+    let p=document.createElement('div');p.id='memoryPanel';p.style.cssText='position:fixed;left:10px;right:10px;bottom:92px;z-index:3000;background:#0b1424;border:1px solid #355174;border-radius:20px;padding:14px;box-shadow:0 18px 60px #000b;max-width:560px;margin:auto;color:white;display:grid;gap:8px';
     p.innerHTML='<b style="color:#facc15">'+title+'</b><small style="color:#a8b6cc">Tap a phrase to hear it. Tap Strong when you know it.</small>';
     phrases.forEach(x=>{let row=document.createElement('div');row.style.cssText='display:grid;grid-template-columns:1fr auto auto;gap:6px;align-items:center;background:#07111f;border:1px solid #2a3c58;border-radius:14px;padding:8px';row.innerHTML='<span>'+x+'<br><small style="color:#facc15">'+phraseState(x)+'</small></span>';let l=document.createElement('button');l.textContent='🔊';l.onclick=()=>say(x);let s=document.createElement('button');s.textContent='Strong';s.onclick=()=>{setPhraseState(x,'Strong');row.querySelector('small').textContent='Strong'};row.appendChild(l);row.appendChild(s);p.appendChild(row)});
     let close=document.createElement('button');close.textContent='Close';close.onclick=()=>p.remove();p.appendChild(close);document.body.appendChild(p);
   }
+  window.showMemoryPanel=function(type){floatingPanel(type==='emergency'?'Emergency German':'Today’s 5 phrases',type==='emergency'?emergency:daily)};
+  function wireExistingButtons(){
+    document.querySelectorAll('#memoryBar button').forEach(btn=>{
+      if(btn.dataset.wired)return;btn.dataset.wired='1';
+      btn.onclick=function(){window.showMemoryPanel(btn.textContent.toLowerCase().includes('emergency')?'emergency':'daily')};
+    });
+  }
   function addMemoryButtons(){
-    if(document.getElementById('memoryBar'))return;
-    let bar=document.createElement('div');bar.id='memoryBar';bar.style.cssText='position:fixed;left:50%;top:112px;transform:translateX(-50%);z-index:45;display:flex;gap:7px;background:#07111fd9;border:1px solid #2a3c58;border-radius:999px;padding:6px;box-shadow:0 10px 35px #0008';
-    let d=document.createElement('button');d.textContent='Daily 5';d.onclick=()=>floatingPanel('Today’s 5 phrases',daily);
-    let e=document.createElement('button');e.textContent='Emergency';e.onclick=()=>floatingPanel('Emergency German',emergency);
-    bar.appendChild(d);bar.appendChild(e);document.body.appendChild(bar);
+    let bar=document.getElementById('memoryBar');
+    if(!bar){bar=document.createElement('div');bar.id='memoryBar';let d=document.createElement('button');d.textContent='Daily 5';let e=document.createElement('button');e.textContent='Emergency';bar.appendChild(d);bar.appendChild(e);document.body.appendChild(bar)}
+    wireExistingButtons();
   }
   function polishRoleplay(){
     const text=document.body.innerText||'';if(!text.includes('Ist alles okay?'))return;let card=document.querySelector('.roleCard');
