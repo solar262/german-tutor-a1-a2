@@ -1,4 +1,5 @@
 /* Mobile navigation clarity fix: keep section labels visible and avoid relying on browser back */
+.model{display:none!important;visibility:hidden!important;height:0!important;margin:0!important;padding:0!important;overflow:hidden!important;}
 @media (max-width: 520px){
   .phone{padding-bottom:245px!important;}
   nav{
