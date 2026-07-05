@@ -1,4 +1,4 @@
-// Remove misleading test model lines, add beginner multiple-choice help, and polish confusing roleplay wording.
+// Remove misleading test model lines, add beginner multiple-choice help, and add clear roleplay situation context.
 (function(){
   const answers={
     'Translate: My name is Sam.':'Mein Name ist Sam.',
@@ -42,9 +42,17 @@
       input.parentNode.insertBefore(box,input);
     })
   }
+  function addSituation(card,title,body,goal){
+    if(!card||card.querySelector('.situationBox'))return;
+    let box=document.createElement('div');box.className='situationBox';box.style.cssText='background:#10233b;border:1px solid #355174;color:#dbeafe;border-radius:18px;padding:12px;margin:0 0 12px;font-weight:800;line-height:1.35';
+    box.innerHTML='<b style="color:#facc15">Situation: '+title+'</b><br>'+body+'<br><span style="color:#facc15">Goal:</span> '+goal;
+    card.insertBefore(box,card.firstChild);
+  }
   function polishRoleplay(){
     const text=document.body.innerText||'';
     if(!text.includes('Ist alles okay?'))return;
+    let card=document.querySelector('.roleCard');
+    addSituation(card,'Problem at home','You are not okay. Your neighbour asks if everything is okay.','Say no, then say you have a problem.');
     document.querySelectorAll('.coachBox p').forEach(p=>{if(p.textContent.includes('Say that you have a problem'))p.textContent='Say no, then say you have a problem.'});
     document.querySelectorAll('.chips').forEach(chips=>{
       if(chips.innerText.includes('ein Problem')&&!chips.innerText.includes('Nein')){
