@@ -1,4 +1,4 @@
-// Remove misleading test model lines and add beginner multiple-choice help.
+// Remove misleading test model lines, add beginner multiple-choice help, and polish confusing roleplay wording.
 (function(){
   const answers={
     'Translate: My name is Sam.':'Mein Name ist Sam.',
@@ -42,6 +42,18 @@
       input.parentNode.insertBefore(box,input);
     })
   }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',addChoices);else addChoices();
-  new MutationObserver(addChoices).observe(document.documentElement,{childList:true,subtree:true});
+  function polishRoleplay(){
+    const text=document.body.innerText||'';
+    if(!text.includes('Ist alles okay?'))return;
+    document.querySelectorAll('.coachBox p').forEach(p=>{if(p.textContent.includes('Say that you have a problem'))p.textContent='Say no, then say you have a problem.'});
+    document.querySelectorAll('.chips').forEach(chips=>{
+      if(chips.innerText.includes('ein Problem')&&!chips.innerText.includes('Nein')){
+        let b=document.createElement('button');b.textContent='Nein';b.type='button';b.onclick=()=>{let input=document.querySelector('.roleCard input');if(input){input.value=(input.value+' Nein').trim();input.dispatchEvent(new Event('input',{bubbles:true}))}};chips.insertBefore(b,chips.firstChild)
+      }
+    });
+    document.querySelectorAll('.modelAnswer span').forEach(s=>{if(s.textContent==='Ich habe ein Problem.')s.textContent='Nein, ich habe ein Problem.'});
+  }
+  function run(){addChoices();polishRoleplay()}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();
+  new MutationObserver(run).observe(document.documentElement,{childList:true,subtree:true});
 })();
