@@ -1,7 +1,13 @@
 /* Mobile navigation clarity fix: keep section labels visible and avoid relying on browser back */
 .model{display:none!important;visibility:hidden!important;height:0!important;margin:0!important;padding:0!important;overflow:hidden!important;}
+#memoryBar{position:fixed!important;left:50%!important;top:72px!important;transform:translateX(-50%)!important;z-index:2000!important;display:flex!important;gap:7px!important;background:#07111ff2!important;border:1px solid #2a3c58!important;border-radius:999px!important;padding:6px!important;box-shadow:0 10px 35px #0008!important;max-width:calc(100% - 22px)!important;}
+#memoryBar button{padding:9px 12px!important;border-radius:999px!important;font-size:13px!important;background:#22324b!important;color:#fff!important;font-weight:900!important;white-space:nowrap!important;}
+#memoryPanel{z-index:3000!important;}
+.mcBox{background:#07111f!important;border:1px solid #2a3c58!important;border-radius:18px!important;padding:12px!important;margin:10px 0!important;display:grid!important;gap:8px!important}.mcBox>b{color:#facc15!important;font-size:14px!important}.mcBox button{background:#17263d!important;border:1px solid #2a3c58!important;border-radius:14px!important;padding:11px!important;text-align:left!important;font-size:14px!important}.memoryRescue{display:grid!important;}
 @media (max-width: 520px){
-  .phone{padding-bottom:245px!important;}
+  .phone{padding-top:128px!important;padding-bottom:245px!important;}
+  .gumroad-cta{display:none!important;}
+  #memoryBar{top:12px!important;}
   nav{
     width:min(540px,calc(100% - 12px))!important;
     padding:8px!important;
